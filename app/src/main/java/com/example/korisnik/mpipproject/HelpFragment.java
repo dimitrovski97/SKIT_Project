@@ -108,7 +108,7 @@ public class HelpFragment extends Fragment {
                 Collections.sort(downloadList);
                 dialog.dismiss();
                 adapter.setHomelessList(downloadList);
-
+                repository.setHomelessList(downloadList);
             }
 
             @Override
