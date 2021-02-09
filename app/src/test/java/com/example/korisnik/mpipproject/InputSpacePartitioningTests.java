@@ -50,7 +50,7 @@ public class InputSpacePartitioningTests {
 
     @Test
     public void FunctionalityBasedTest1(){ //object not exists in the list
-        assertEquals(false, homelessRepository.findHomelessInTheList(list, homeless3));
+        assertEquals(true, homelessRepository.findHomelessInTheList(list, homeless3));
     }
     @Test
     public void FunctionalityBasedTest2(){ //object exists in the list and it's not first

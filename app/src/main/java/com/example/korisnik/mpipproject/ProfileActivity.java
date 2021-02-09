@@ -3,6 +3,7 @@ package com.example.korisnik.mpipproject;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,12 +53,35 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     public void saveUserInfo(){
         String name= editTextName.getText().toString().trim();
-        String addres=editTextAddress.getText().toString().trim();
+        String address=editTextAddress.getText().toString().trim();
         FirebaseUser user=firebaseAuth.getCurrentUser();
-        String userID=user.getUid();
+        String userID;
+        if(user != null) {
+            userID = user.getUid();
+            if(TextUtils.isEmpty(userID)){
+                Toast.makeText(this, "User without id", Toast.LENGTH_SHORT).show();
+                throw new NullPointerException();
+            }
+        }
+        else{
+            throw new NullPointerException();
+        }
 
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT).show();
+            throw new NullPointerException();
+        }
+        if (TextUtils.isEmpty(address)) {
+            Toast.makeText(this, "Please enter an address", Toast.LENGTH_SHORT).show();
+            throw new NullPointerException();
+        }
+        if(!address.matches(".*\\d.*"))
+        {
+            Toast.makeText(this, "Please specify number in the address", Toast.LENGTH_SHORT).show();
+            throw new IllegalArgumentException();
+        }
         //Adding new users to repository
-        UserInfo userInfo=new UserInfo(userID, name, addres);
+        UserInfo userInfo = new UserInfo(userID, name, address);
         userRepository.insert(userInfo);
 
         Toast.makeText(this, "Information saved...", Toast.LENGTH_SHORT).show();
