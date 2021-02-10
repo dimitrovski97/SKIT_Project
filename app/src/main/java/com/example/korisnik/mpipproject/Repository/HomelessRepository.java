@@ -71,6 +71,14 @@ public class HomelessRepository {
         return false;
     }
 
+    public boolean findHungryChildInTheList(List<Homeless> list, Homeless homeless){
+        for(Homeless item:list){
+            if(item == homeless && (homeless.getAge() < 18 || homeless.getNeeds() == "medicals"))
+                return true;
+        }
+        return false;
+    }
+
     public void insert(final Homeless homeless){
         if(findHomelessInTheList(homelessList,homeless)){
             return;

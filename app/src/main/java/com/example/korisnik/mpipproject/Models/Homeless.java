@@ -76,7 +76,12 @@ public class Homeless implements Comparable<Homeless>{
         this.surname = surname;
         this.age = age;
     }
-
+    public Homeless(String name, String surname, int age, String needs) {
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.needs = needs;
+    }
 
     public String getName() {
         return name;
