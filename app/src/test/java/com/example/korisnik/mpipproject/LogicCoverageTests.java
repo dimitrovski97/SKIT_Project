@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.testng.AssertJUnit.assertFalse;
-import static org.testng.AssertJUnit.assertTrue;
+import static org.junit.Assert.*;
 
 public class LogicCoverageTests {
     HomelessRepository homelessRepository = new HomelessRepository("Testing");

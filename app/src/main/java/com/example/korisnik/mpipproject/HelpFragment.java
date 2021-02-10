@@ -32,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.InvalidObjectException;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -80,8 +82,14 @@ public class HelpFragment extends Fragment {
                     }
                 });
     }
-    public static float distance(double lat1, double lng1, double lat2, double lng2) {
+    public static float distance(double lat1, double lng1, double lat2, double lng2) throws IllegalArgumentException {
         double earthRadius = 6371000; //meters
+        if (lat1 < 0 || lng1 < 0 || lat2 < 0 || lng2 < 0){
+            throw new IllegalArgumentException("Invalid input exception");
+        }
+        if (lat1 - lat2 == 0 && lng1 - lng2 == 0){
+            throw new InvalidParameterException("You have entered same point");
+        }
         double dLat = Math.toRadians(lat2 - lat1);
         double dLng = Math.toRadians(lng2 - lng1);
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -102,7 +110,11 @@ public class HelpFragment extends Fragment {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Homeless homeless = postSnapshot.getValue(Homeless.class);
                     Log.e("Get Data", homeless.getName());
-                    homeless.setDistance(distance(lat,lng,homeless.getLatitude(),homeless.getLongitude()));
+                    try {
+                        homeless.setDistance(distance(lat,lng,homeless.getLatitude(),homeless.getLongitude()));
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
+                    }
                     downloadList.add(homeless);
                 }
                 Collections.sort(downloadList);
