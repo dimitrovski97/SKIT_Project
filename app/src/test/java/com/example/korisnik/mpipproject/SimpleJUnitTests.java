@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -23,6 +24,7 @@ public class SimpleJUnitTests {
     Homeless homeless4 = new Homeless("Viktorija","Lapevska", 38);
     Homeless homeless5 = new Homeless("BezIme","BezPrezime",12);
     Homeless homeless6 = new Homeless();
+    Homeless homeless7 = null;
     List<Homeless> list;
     public Collection<Object[]> testCases(){
         return Arrays.asList(new Object[][]{
@@ -50,6 +52,11 @@ public class SimpleJUnitTests {
     @Test
     public void homelessDoesntExist(){
         assertEquals(false,homelessRepository.findHomelessInTheList(list, homeless6));
+    }
+
+    @Test
+    public void homelessNull(){
+        assertThrows(NullPointerException.class, () -> homelessRepository.findHomelessInTheList(list, homeless7));
     }
 
     @Test(expected = IllegalArgumentException.class)

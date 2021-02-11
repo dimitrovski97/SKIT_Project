@@ -63,6 +63,9 @@ public class HomelessRepository {
         System.out.println( newList.toString());
     }
     public boolean findHomelessInTheList(List<Homeless> list, Homeless homeless){
+        if(homeless == null){
+            throw new NullPointerException();
+        }
         for(Homeless item:list){
             if(item == homeless){
                 return true;
